@@ -1,0 +1,29 @@
+# write_order_to_json(), в которую передается 5 параметров — товар (item), количество (quantity), цена (price), покупатель (buyer), дата (date).
+import json
+import io
+
+item = 'Товар'
+quantity = 1
+price = 1
+buyer = 'Покупатель'
+day = '01.01.2019'
+def write_order_to_json(item, quantity, price, buyer, day):
+    data = {'item': item,
+            'quantity': quantity,
+            'price': price,
+            'buyer': buyer,
+            'date': day}
+
+    # сохранить в json
+    with open('orders.json', 'w', encoding='utf-8') as fh:  # открываем файл на запись
+        fh.write(
+            json.dumps(data, ensure_ascii=False))  # преобразовываем словарь data в unicode-строку и записываем в файл
+
+    # загрузить из json
+    with open('orders.json', 'r', encoding='utf-8') as fh:  # открываем файл на чтение
+        data1 = json.load(fh)  # загружаем из файла данные в словарь data1
+    print(data)
+    print(data1)
+
+
+write_order_to_json(item, quantity, price, buyer, day)
