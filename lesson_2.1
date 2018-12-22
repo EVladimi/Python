@@ -1,0 +1,56 @@
+# Обработка csv - файла
+import csv
+import re
+output_file = open("main_data.csv", "w")
+# определение функции  write_to_csv
+
+ 
+def write_to_csv(output_file):
+    main_data = ['Изготовитель системы', 'Название', 'Код продукта', 'Тип системы']
+    os_prod_list = []
+    os_name_list = []
+    os_code_list = []
+    os_type_list = []
+    # определение
+
+
+    def get_data():
+        global main_data
+        global os_prod_list
+        global os_code_list
+        global os_code_list
+        global os_type_list
+
+        # извлечение данных из 3 файлов
+        spisok_fls = ['info_1.txt', 'info_2.txt', 'info_3.txt', 'info_4.txt']
+        for f in spisok_fls:
+            with open(f, "r") as file:
+                for line in file:
+                    os_prod_list.append(re.search(r'Изготовитель системы=(.+?),', line))
+                    os_name_list.append(re.search(r'Название ОС=(.+?),', line))
+                    os_code_list.append(re.search(r'Код продукта=(.+?),', line))
+                    os_type_list.append(re.search(r'Тип системы=(.+?),', line))
+
+# end def 
+
+    get_data()
+    wrtr = csv.DictWriter(output_file,
+
+                          fieldnames=main_data)
+    rec = []
+    for elm in os_prod_list:
+
+        try:
+          rec.append(elm)
+          rec.append(os_name_list.index(elm))
+          rec.append(os_code_list.index(elm))
+          rec.append(os_code_list.index(elm))
+          rec.append(os_type_list.index(elm))
+         except:
+          print('Обработка ошибки')
+        
+
+         wrtr.writerow(rec)
+    
+
+write_to_csv(output_file)
