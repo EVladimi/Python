@@ -1,1 +1,57 @@
+# Server  a=''
+def server(a, p):
+    from socket import *
+    import json
+    import os
+    import datetime
+    import time
+    # ответы
+    data_ok = {
+                          "response": 200,
+                          "alert": "OK"
+                         }
+    jsdata_ok = json.dumps(data_ok)
+    sock = socket(AF_INET, SOCK_DGRAM)
+    sock.setsockopt(SOL_SOCKET, SO_REUSEADDR, 1)
+    sock.setsockopt(SOL_SOCKET, SO_BROADCAST, 1)
+    sock.bind((a, p))
+    while True:
+        conn, addr = sock.accept()
+        # получение сообщения от клиента
+        data = json.loads(conn.recv(10000))
+        if not data:
+            break
 
+        conn.send(jsdata_ok)
+
+        conn.close()
+# Client   addr = 'localhost'
+
+
+def client(addr, port):
+    from socket import *
+    import os
+    import datetime
+    import time
+    import json
+
+    sock = socket(AF_INET, SOCK_DGRAM)
+    sock.setsockopt(SOL_SOCKET, SO_BROADCAST, 1)
+    while True:
+        # Формирование сообщения
+        data = {
+                           "action": "presence",
+                           "time": int(time.time()),
+                           "type": "status",
+                           "user": {
+                                    "account_name":  "User",
+                                    "status":      "I am here!"
+                                   }
+                          }
+        jsdata = json.dumps(data)
+        sock.sendto(jsdata, (addr, port))
+        # Разбор ответа
+        data = json.loads(sock.recv(10000))
+        if data["response"] != 200:
+            break
+        sock.close()
