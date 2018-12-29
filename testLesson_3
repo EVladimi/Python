@@ -1,0 +1,36 @@
+# Модульные тесты
+class TestServer(unittest.TestCase):
+    def setUp(self):
+        # Выполнить настройку тестов ()
+        pass
+    def testserver(self):
+        # Обработка ситуации с некорректными значениями параметров
+        r = lesson_3.server(' ',' ')
+        self.assertRaises(TypeError, r)
+    def testclient(self):
+        r = lesson_3.server('','')
+        self.assertRaises(TypeError, r)
+
+    def tearDown(self):
+        # Выполнить завершающие действия ()
+        pass
+
+class TestClient(unittest.TestCase):
+    def setUp(self):
+        # Выполнить настройку тестов ()
+        pass
+    def testclient(self):
+        r = lesson_3.client(' ',' ')
+        self.assertRaises(TypeError, r)
+    def testclient(self):
+        r = lesson_3.client('','')
+        self.assertRaises(TypeError, r)
+
+    def tearDown(self):
+        # Выполнить завершающие действия ()
+        pass
+
+
+# Запустить тестирование
+if __name__ == '__main__':
+    unittest.main()
