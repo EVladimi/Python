@@ -1,0 +1,23 @@
+def log(func):
+    import logging
+    import logging.handlers
+    from logging.handlers import RotatingFileHandler
+
+    LOG_FILENAME = "app.srv.log"
+    logging.basicConfig(
+              format="%(asctime)s %(levelname)-10s %(message)s",
+              filename=LOG_FILENAME,
+              level=logging.INFO
+    )
+    log = logging.getLogger('app')
+    def callf(*args,**kwargs):
+        log.info("Функция %s: %s, %s вызвана из %s\n" % (func.__name__, args, kwargs,func.__module__))
+        r = func(*args,**kwargs)
+        return r
+  	 return callf
+@log
+def func_z():
+ pass
+
+def main():
+ func_z()
