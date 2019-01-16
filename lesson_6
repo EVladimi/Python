@@ -4,3 +4,14 @@ def func_z():
 
 def main():
  func_z()
+ 
+def log(func):
+    import logging
+    log = logging.getLogger('app')
+    def callf(*args,**kwargs):
+        debug_log.write("Вызов %s: %s, %s\n" % (func.__name__, args, kwargs))
+        r = func(*args,**kwargs)
+        return r
+    	 return callf
+    else:
+        return func
