@@ -11,7 +11,7 @@ def log(func):
     )
     log = logging.getLogger('app')
     def callf(*args,**kwargs):
-        log.info("Вызов %s: %s, %s\n" % (func.__name__, args, kwargs))
+        log.info("Функция %s: %s, %s вызвана из %s\n" % (func.__name__, args, kwargs,func.__module__))
         r = func(*args,**kwargs)
         return r
   	 return callf
