@@ -7,6 +7,15 @@ def main():
  
 def log(func):
     import logging
+    import logging.handlers
+    from logging.handlers import RotatingFileHandler
+
+    LOG_FILENAME = "app.srv.log"
+    logging.basicConfig(
+              format="%(asctime)s %(levelname)-10s %(message)s %(module)s ",
+              filename=LOG_FILENAME,
+              level=logging.ERROR
+    )
     log = logging.getLogger('app')
     def callf(*args,**kwargs):
         debug_log.write("Вызов %s: %s, %s\n" % (func.__name__, args, kwargs))
