@@ -1,0 +1,6 @@
+@log
+def func_z():
+ pass
+
+def main():
+ func_z()
